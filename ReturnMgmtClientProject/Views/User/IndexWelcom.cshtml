@@ -14,6 +14,7 @@
     <h1>welcome page</h1>
     <h1>@TempData.Peek("Name")</h1>
     <h1>@TempData.Peek("CCNumber")</h1>
+    @ViewBag.message
     @Html.ActionLink("Request", "ProcessRequest", "User", new { @class = "btn btn-info " })
 
     <!--<header>

@@ -21,18 +21,27 @@ namespace ReturnMgmtClientProject.Controllers
             using (var httpClient = new HttpClient())
             {
                 //
-                using (var response = await httpClient.GetAsync("http://localhost:54592/api/Process/GetAllDetails"))
+                try
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    detailsList = JsonConvert.DeserializeObject<List<ProcessDetail>>(apiResponse);
+                    using (var response = await httpClient.GetAsync("http://localhost:34213/api/Process/GetAllDetails"))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        detailsList = JsonConvert.DeserializeObject<List<ProcessDetail>>(apiResponse);
 
 
+                    }
+
+
+                    ProcessDetail processDetail = detailsList.FirstOrDefault(d => d.Name == name);
+                    TempData["Name"] = processDetail.Name;
+                    TempData["CCNumber"] = processDetail.CreditCardNumber.ToString();
+                }
+                catch (Exception)
+                {
+                    ViewBag.message = "component api not loaded";
+                    return View();
                 }
             }
-
-            ProcessDetail processDetail = detailsList.FirstOrDefault(d => d.Name == name);
-            TempData["Name"] = processDetail.Name;
-            TempData["CCNumber"] = processDetail.CreditCardNumber.ToString();
             return View("ProcessRequest");
         }
 
@@ -55,7 +64,7 @@ namespace ReturnMgmtClientProject.Controllers
                 StringContent content = new StringContent(JsonConvert.SerializeObject(processRequest), Encoding.UTF8, "application/json");
                 try
                 {
-                    using (var response = await httpClient.PostAsync("http://localhost:54592/api/Process/ProcessRequest", content))
+                    using (var response = await httpClient.PostAsync("http://localhost:34213/api/Process/ProcessRequest", content))
                     {
                         if (response.IsSuccessStatusCode)
                         {
@@ -78,7 +87,7 @@ namespace ReturnMgmtClientProject.Controllers
                 }
                 catch (Exception)
                 {
-                    ViewBag.ApiMessage = "Component Processing and Package Delivery APIs not Loaded. Please Try Later.";
+                    ViewBag.message1 = "Component Processing and Package Delivery APIs not Loaded. Please Try Later.";
                     return RedirectToAction("Login", "Login");
                 }
 
@@ -104,7 +113,7 @@ namespace ReturnMgmtClientProject.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("http://localhost:54592/api/Process/CompleteProcessing/" +RequestId))
+                using (var response = await httpClient.GetAsync("http://localhost:34213/api/Process/CompleteProcessing/" + RequestId))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     pay = Convert.ToString(apiResponse);
@@ -139,7 +148,7 @@ namespace ReturnMgmtClientProject.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     StringContent content = new StringContent(JsonConvert.SerializeObject(paymentModel), Encoding.UTF8, "application/json");
-                    using (var response = await httpClient.PostAsync("https://localhost:44316/api/Payment/GetPaymentDetails", content))
+                    using (var response = await httpClient.PostAsync("http://localhost:46046/api/Payment/GetPaymentDetails", content))
                     {
                         apiResponse = await response.Content.ReadAsStringAsync();
                         //paymentModel = JsonConvert.DeserializeObject<PaymentModel>(apiResponse);
