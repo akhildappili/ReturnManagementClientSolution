@@ -1,0 +1,102 @@
+﻿@model ComponentProcessingAPIProject.Test.view_model.ProcessRequest
+
+@{
+    ViewData["Title"] = "ProcessRequest";
+}
+
+
+
+<head>
+    <link href="~/css/addRequestDetails.css" rel="stylesheet" />
+    <link href="~/css/Admin.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="viewport">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <header>
+                <h3 style="text-align:center ; color:aquamarine" >Return Management</h3>
+                <a href="#">Welcome @TempData.Peek("Name") </a>
+            </header>
+            <ul class="nav">
+                <li>
+                    @Html.ActionLink("Home", "IndexWelcom", new { name = @TempData.Peek("Name") })<br /><br />
+
+                </li>
+                <li>
+                    @Html.ActionLink("Logout", "Logout", "Login")<br /><br />
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+
+            <div class="row ">
+                <div class="col-lg-7 mx-auto">
+                    <div class="card mt-2 mx-auto p-4 bg-light">
+                        <div class="card-body bg-light">
+                            <div class="container">
+                                <form asp-action="ProcessRequest">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ContactNumber" class="control-label"></label>
+                                        <input asp-for="ContactNumber" class="form-control" />
+                                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                    </div>
+                                    @*<div class="form-group">
+            <label asp-for="CreditCardNumber" class="control-label"></label>
+            <input asp-for="CreditCardNumber" class="form-control" />
+            <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+        </div>*@
+                                    <div class="form-group">
+                                        <label asp-for="ComponentType" class="control-label"></label>
+                                        @*<input asp-for="ComponentType" class="form-control" />*@
+                                        <select asp-for="ComponentType" class="form-control">
+                                            <option value="">Select Component Type</option>
+                                            <option>Integral</option>
+                                            <option>Accessory</option>
+                                        </select>
+                                        <span asp-validation-for="ComponentType" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ComponentName" class="control-label"></label>
+                                        <input asp-for="ComponentName" class="form-control" />
+                                        <span asp-validation-for="ComponentName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Quantity" class="control-label"></label>
+                                        <input asp-for="Quantity" class="form-control" />
+                                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IsPriorityRequest" class="control-label"></label>
+                                        @*<input asp-for="IsPriorityRequest" class="form-control" />*@
+                                        <select asp-for="IsPriorityRequest" class="form-control">
+                                            <option value="">Select Priority Request</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+
+                                        </select>
+                                        <span asp-validation-for="IsPriorityRequest" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Request" class="btn btn-primary" />
+                                    </div>
+
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- /.8 -->
+                </div> <!-- /.row-->
+            </div>
+        </div>
+</body>
+
+
+

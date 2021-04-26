@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "CompleteProcess";
+}
+
+<head>
+    <link href="~/css/Admin.css" rel="stylesheet" />
+</head>
+
+<div id="viewport">
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <header>
+            <h3 style="text-align:center ; color:aquamarine">Return Management</h3>
+            <a href="#">Welcome @TempData.Peek("Name") </a>
+        </header>
+        <ul class="nav">
+            <li>
+                @Html.ActionLink("Home", "IndexWelcom", new { name = @TempData.Peek("Name") })<br /><br />
+
+            </li>
+            <li>
+                @Html.ActionLink("Logout", "Logout", "Login")<br /><br />
+            </li>
+        </ul>
+    </div>
+
+    <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+        <div class="card-block">
+            <h3 class="card-title" style="color:greenyellow">Payment</h3>
+            <p class="card-text">
+                <h3 style="color:greenyellow">Request Id is : @TempData.Peek("RequestId")</h3>
+                <h3 style="color:greenyellow">Processing Charge is : @TempData.Peek("Processing")</h3>
+                <h3 style="color:greenyellow">Delivery and Packaging Charges : @TempData.Peek("PandD")</h3>
+
+                <h3 style="color:greenyellow">Total Charges : @TempData.Peek("pay")</h3>
+
+            </p>
+            <div>
+                <ul style="list-style-type:none;color:yellow;">
+                    <li class="nav-item">
+                        @Html.ActionLink("Payment", "Payment", "User", new { RequestId = @TempData.Peek("RequestId") }, new { @class = "btn btn-primary " })
+                        @Html.ActionLink("Cancel", "IndexWelcom", "User", new { name = TempData.Peek("Name") }, new { @class = "btn btn-danger " })
+                    </li>
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!--<div class="blog-card spring-fever">
+        <div class="title-content">
+            <h3>Payment Details</h3>
+            <hr />
+            <div class="intro"></div>
+        </div><!-- /.title-content -->
+    <!--<div class="card-info">
+
+        <h3 style="color:greenyellow">CompleteProcess</h3>
+
+        <h3 style="color:greenyellow">Request Id is : @TempData.Peek("RequestId")</h3>
+        <h3 style="color:greenyellow">Processing Charge is : @TempData.Peek("Processing")</h3>
+        <h3 style="color:greenyellow">Delivery and Packageing Charges : @TempData.Peek("PandD")</h3>
+
+        <h3 style="color:greenyellow">Total Charges : @TempData.Peek("pay")</h3>-->
+    @*@Html.ActionLink("Payment", "Payment", "User", new { RequestId = @TempData.Peek("RequestId") }, new { @class = "btn btn-primary " })*@
+
+    <!--<div >
+            <ul style="list-style-type:none;color:yellow;">
+                <li class="nav-item">
+                    @Html.ActionLink("Payment", "Payment", "User", new { RequestId = @TempData.Peek("RequestId") }, new { @class = "btn btn-primary " })
+                    @*@Html.ActionLink("Confirm", "CompleteProcess", "User", new { RequestId = Model.RequestId }, new { @class = "btn btn-primary " })*@
+                </li>
+            </ul>
+
+
+        </div>
+    </div>-->
+    <!-- /.card-info -->
+    <!--<div class="utility-info">
+
+    </div>-->
+    <!-- /.utility-info -->
+    <!-- overlays -->
+    <!--<div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+    </div>-->
+    <!-- /.blog-card -->
+    @*<h1>CompleteProcess</h1>
+
+        <h2>Request Id is : @TempData.Peek("RequestId")</h2>
+        <h2>Processing Charge is : @TempData.Peek("Processing")</h2>
+        <h2>Delivery and Packageing Charges : @TempData.Peek("PandD")</h2>
+
+        <h2>Total Charges : @TempData.Peek("pay")</h2>
+
+        @Html.ActionLink("Payment", "Payment", "User", new { RequestId = @TempData.Peek("RequestId") })*@

@@ -1,0 +1,70 @@
+﻿@model ComponentProcessingAPIProject.Test.view_model.ProcessResponse
+
+@{
+    ViewData["Title"] = "ProcessResponse";
+}
+
+<head>
+    <link href="~/css/styleProcessResponse.css" rel="stylesheet" />
+    <link href="~/css/Admin.css" rel="stylesheet" />
+</head>
+
+<div id="viewport">
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <header>
+            <h3 style="text-align:center ; color:aquamarine">Return Management</h3>
+            <a href="#">Welcome @TempData.Peek("Name") </a>
+        </header>
+        <ul class="nav">
+            <li>
+                @Html.ActionLink("Home", "IndexWelcom", new { name = @TempData.Peek("Name") })<br /><br />
+
+            </li>
+            <li>
+                @Html.ActionLink("Logout", "Logout", "Login")<br /><br />
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h4>ProcessResponse</h4>
+        <hr />
+        <dl @*class="Process"*@>
+            <dt @*class="col-sm-2" style="background-color:yellow;"*@>
+                @Html.DisplayNameFor(model => model.RequestId)
+            </dt>
+            <dd @*class="col-sm-3" style="background-color:pink;"*@>
+                @Html.DisplayFor(model => model.RequestId)
+            </dd>
+            <dt @*class="col-sm-2" style="background-color:yellow;"*@>
+                @Html.DisplayNameFor(model => model.ProcessingCharge)
+            </dt>
+            <dd @*class="col-sm-9" style="background-color:pink";*@>
+                @Html.DisplayFor(model => model.ProcessingCharge)
+            </dd>
+            <dt @*class="col-sm-2" style="background-color:yellow;"*@>
+                @Html.DisplayNameFor(model => model.PackagingAndDeliveryCharge)
+            </dt>
+            <dd @*class="col-sm-9" style="background-color:pink;"*@>
+                @Html.DisplayFor(model => model.PackagingAndDeliveryCharge)
+            </dd>
+            <dt @*class="col-sm-2" style="background-color:yellow;"*@>
+                @Html.DisplayNameFor(model => model.DateofDelivery)
+            </dt>
+            <dd @*class="col-sm-9" style="background-color:pink;"*@>
+                @Html.DisplayFor(model => model.DateofDelivery)
+            </dd>
+        </dl>
+        @*@Html.ActionLink("ok", "CompleteProcess","User", new { RequestId = Model.RequestId },new { @class = "btn btn-info " })*@
+        <div class="col-md-12 text-center">
+            <ul style="list-style-type:none">
+                <li class="nav-item">
+                    @*@Html.ActionLink("home", "Index", "Donor", new { name = TempData.Peek("donorname") }, new { @class = "btn btn-info " })*@
+                    @Html.ActionLink("Confirm", "CompleteProcess", "User", new { RequestId = Model.RequestId }, new { @class = "btn btn-primary " })
+                </li>
+            </ul>
+
+            @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+                <a asp-action="Index">Back to List</a>*@
+        </div>
+

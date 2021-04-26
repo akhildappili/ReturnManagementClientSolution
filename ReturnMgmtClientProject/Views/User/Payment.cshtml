@@ -1,0 +1,66 @@
+﻿@model ReturnMgmtClientProject.Models.View_Models.PaymentModel
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<h1 style="text-align:center">Payment</h1>
+
+<head>
+    <link href="~/css/Admin.css" rel="stylesheet" />
+</head>
+
+<div id="viewport">
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <header>
+            <h3 style="text-align:center ; color:aquamarine">Return Management</h3>
+            <a href="#">Welcome @TempData.Peek("Name") </a>
+        </header>
+        <ul class="nav">
+            <li>
+                @Html.ActionLink("Home", "IndexWelcom", new { name = @TempData.Peek("Name") })<br /><br />
+
+            </li>
+            <li>
+                @Html.ActionLink("Logout", "Logout", "Login")<br /><br />
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+
+        <div class="row ">
+            <div class="col-lg-7 mx-auto">
+                <div class="card mt-2 mx-auto p-4 bg-light">
+                    <div class="card-body bg-light">
+                        <div class="container">
+                            <form asp-action="Payment">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="RequestId" class="control-label"></label>
+                                    <input asp-for="RequestId" class="form-control" readonly/>
+                                    <span asp-validation-for="RequestId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CreditCardNumber" class="control-label"></label>
+                                    <input asp-for="CreditCardNumber" class="form-control" readonly/>
+                                    <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CreditLimit" class="control-label"></label>
+                                    <input asp-for="CreditLimit" class="form-control"/>
+                                    <span asp-validation-for="CreditLimit" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Confirm Pay" class="btn btn-primary" />
+                                    @Html.ActionLink("Cancel", "IndexWelcom", "User", new { name = (TempData.Peek("Name")) }, new { @class = "btn btn-danger " })
+                                    @*<input type="submit" value="Cancel" class="btn btn-danger" asp-action="IndexWelcom" asp-controller="User" />*@
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- /.8 -->
+            </div> <!-- /.row-->
+        </div>
+    </div>
+
