@@ -34,7 +34,9 @@ namespace ReturnMgmtClientProject.Controllers
 
                     ProcessDetail processDetail = detailsList.FirstOrDefault(d => d.Name == name);
                     TempData["Name"] = processDetail.Name;
+                    TempData["Priority"] = processDetail.IsPriorityRequest;
                     TempData["CCNumber"] = processDetail.CreditCardNumber.ToString();
+                    TempData["ComponentType"] = processDetail.ComponentType;
                 }
                 catch (Exception)
                 {
@@ -42,57 +44,68 @@ namespace ReturnMgmtClientProject.Controllers
                     return View();
                 }
             }
-            return View("ProcessRequest");
+            // return View("ProcessRequest");
+            return RedirectToAction("ProcessRequest");
         }
 
         [HttpGet]
         public IActionResult ProcessRequest()
         {
-            
-            return View();
+            ProcessRequest pr = new ProcessRequest();
+            pr.Name = (string)TempData.Peek("Name");
+            pr.IsPriorityRequest = (string)TempData.Peek("Priority");
+            pr.ComponentType = (string)TempData.Peek("ComponentType");
+
+            return View(pr);
         }
         [HttpPost]
         public async Task<IActionResult> ProcessRequest(ProcessRequest processRequest)
         {
-
-            ProcessRequest pRequest = new ProcessRequest();
-            ProcessResponse pResponse = new ProcessResponse();
-            pRequest.IsPriorityRequest = "No";
-            using (var httpClient = new HttpClient())
+            if(ModelState.IsValid)
             {
-                //int id = verify.VerificationId;
-                StringContent content = new StringContent(JsonConvert.SerializeObject(processRequest), Encoding.UTF8, "application/json");
-                try
+                ProcessRequest pRequest = new ProcessRequest();
+                ProcessResponse pResponse = new ProcessResponse();
+                pRequest.IsPriorityRequest = "No";
+                using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync("http://localhost:34213/api/Process/ProcessRequest", content))
+                    //int id = verify.VerificationId;
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(processRequest), Encoding.UTF8, "application/json");
+                    try
                     {
-                        if (response.IsSuccessStatusCode)
+                        using (var response = await httpClient.PostAsync("http://localhost:34213/api/Process/ProcessRequest", content))
                         {
-                            string apiResponse = await response.Content.ReadAsStringAsync();
-                            //ViewBag.Result = "Success";
+                            if (response.IsSuccessStatusCode)
+                            {
+                                string apiResponse = await response.Content.ReadAsStringAsync();
+                                //ViewBag.Result = "Success";
 
-                            pResponse = JsonConvert.DeserializeObject<ProcessResponse>(apiResponse);
+                                pResponse = JsonConvert.DeserializeObject<ProcessResponse>(apiResponse);
 
-                            TempData["pResponse"] = JsonConvert.SerializeObject(pResponse);
+                                TempData["pResponse"] = JsonConvert.SerializeObject(pResponse);
+                            }
+
+                            //ViewBag.Result = "Successfully Registered, Please Login.....THANKYOU";
+
+
                         }
+                        TempData["RequestId"] = pResponse.RequestId;
+                        TempData["PandD"] = JsonConvert.SerializeObject(pResponse.PackagingAndDeliveryCharge);
+                        //TempData["PandD"] = pResponse.PackagingAndDeliveryCharge;
+                        TempData["Processing"] = JsonConvert.SerializeObject(pResponse.ProcessingCharge);
 
-                        //ViewBag.Result = "Successfully Registered, Please Login.....THANKYOU";
-                      
-
+                        
                     }
-                    TempData["RequestId"] = pResponse.RequestId;
-                    TempData["PandD"] = JsonConvert.SerializeObject(pResponse.PackagingAndDeliveryCharge);
-                    //TempData["PandD"] = pResponse.PackagingAndDeliveryCharge;
-                    TempData["Processing"] = JsonConvert.SerializeObject(pResponse.ProcessingCharge);
+                    catch (Exception)
+                    {
+                        ViewBag.message1 = "Component Processing and Package Delivery APIs not Loaded. Please Try Later.";
+                        return RedirectToAction("Login", "Login");
+                    }
+
                 }
-                catch (Exception)
-                {
-                    ViewBag.message1 = "Component Processing and Package Delivery APIs not Loaded. Please Try Later.";
-                    return RedirectToAction("Login", "Login");
-                }
+                return RedirectToAction("ProcessResponse");
 
             }
-            return RedirectToAction("ProcessResponse");
+            return View();
         }
 
         [HttpGet]

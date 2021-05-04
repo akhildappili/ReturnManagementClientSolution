@@ -7,6 +7,10 @@
 <head>
     <link href="~/css/styleProcessResponse.css" rel="stylesheet" />
     <link href="~/css/Admin.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   
+
 </head>
 
 <div id="viewport">
@@ -65,6 +69,19 @@
             </ul>
 
             @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-                <a asp-action="Index">Back to List</a>*@
+            <a asp-action="Index">Back to List</a>*@
         </div>
 
+        <button>Set background-color side nav bar</button>
+
+
+        <script type="text/javascript">
+           
+           
+                $(document).ready(function(){
+                    $("button").click(function () {
+                        $("#sidebar").css({ "backgroundColor": "pink", "color": "yellow" });
+                    });
+                 });
+       
+        </script>
